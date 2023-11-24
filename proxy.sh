@@ -12,20 +12,23 @@ function set_proxy() {
     https="https://$ip:$port"
     export http_proxy=$http
     export https_proxy=$https
-    git config --global https.proxy $http
+    export http=$http
+    export https=$https
+    export all_proxy=$http
+    git config --global http.proxy $http
     git config --global https.proxy $https
     echo -e "Proxy on: $ip:$port."
 }
 
 function unset_proxy(){
-    unset http_proxy https_proxy
+    unset http_proxy https_proxy http https all_proxy
     git config --global --unset http.proxy
     git config --global --unset https.proxy
     echo -e "Proxy off."
 }
 
 
- test_setting(){
+function test_proxy(){
     echo "Http proxy:" ${http}
     echo "Https proxy:" ${https}
     echo "Try to connect to Google..."
